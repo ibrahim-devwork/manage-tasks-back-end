@@ -67,11 +67,11 @@ class Kernel extends HttpKernel
         'force_json_sanctum' => ForceJsonSanctum::class, // Return Json 
     ];
 
-    // too
+    // We need this [middlewarePriority] to work [force_json_sanctum]
     protected $middlewarePriority = [
         // ...
             \App\Http\Middleware\SetDefaultLocaleForUrls::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            // ...
+        // ...
     ];
 }
