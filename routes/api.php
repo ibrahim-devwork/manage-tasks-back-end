@@ -3,6 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DropDownActionsnController;
+use App\Http\Controllers\DropDownProjectsController;
+use App\Http\Controllers\DropDownRolesController;
+use App\Http\Controllers\DropDownUsersController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
@@ -55,6 +59,11 @@ Route::group(['middleware'=> ['force_json_sanctum']], function () {
         Route::put('/tasks-statut/{id}',    [TaskController::class, 'changeStatut'])->name('tasks-changeStatut');
         Route::delete('/tasks/{id}',        [TaskController::class, 'delete'])->name('tasks-delete');
 
+        // DropDown routes
+        Route::get('/select-roles',     DropDownRolesController::class);
+        Route::get('/select-users',     DropDownUsersController::class);
+        Route::get('/select-projects',  DropDownProjectsController::class);
+        Route::get('/select-actions',   DropDownActionsnController::class);
     });
 
     // Free routes --------------------------------------------

@@ -29,6 +29,9 @@ class User extends Authenticatable
         'image',
     ];
 
+    /*
+    * Scope for search
+    */
     public function scopeSearch($query, $search)
     {
         return $query->where('first_name', 'LIKE', "%{$search}%")
