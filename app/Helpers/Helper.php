@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\File;
 class Helper
 {
     // Constants
-    const count_per_page    = 15;
+    const count_per_page    = 10;
 
     const SUPER_ADMIN_ROLE  = 'Super admin';
     const ADMIN_ROLE        = 'Admin';

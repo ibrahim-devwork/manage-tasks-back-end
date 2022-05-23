@@ -24,7 +24,7 @@ class AuthRequest extends BaseRequest
     public function rules()
     {
         return [
-            'username'  => ['bail', 'required', 'string', 'max:50'],
+            'username'  => ['bail', 'required', 'string', 'min:3', 'max:50'],
             'password'  => ['bail', 'required', 'string', 'min:6', 'max:50'],
         ];
     }

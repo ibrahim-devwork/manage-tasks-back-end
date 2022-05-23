@@ -69,3 +69,4 @@ Route::group(['middleware'=> ['force_json_sanctum']], function () {
     // Free routes --------------------------------------------
 
 });
+

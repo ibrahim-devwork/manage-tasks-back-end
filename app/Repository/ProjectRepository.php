@@ -22,9 +22,9 @@ class ProjectRepository implements InterfaceRepository {
     {
         $user = Auth::user();
         if(Helper::isSuperAdmin()){
-            return $this->project->paginate(Helper::count_per_page);
+            return $this->project->orderBy('created_at', 'DESC')->paginate(Helper::count_per_page);
         }elseif(Helper::isAdmin()){
-            return $this->project->where('id_user', $user->id)->paginate(Helper::count_per_page);
+            return $this->project->where('id_user', $user->id)->orderBy('created_at', 'DESC')->paginate(Helper::count_per_page);
         }
         
     }
