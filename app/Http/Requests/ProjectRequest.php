@@ -53,8 +53,8 @@ class ProjectRequest extends BaseRequest
     public function storeOrUpdate()
     {
         return [
-            'name'          => ['bail', 'nullable', 'max:100'],
-            'description'   => ['bail', 'nullable', 'max:60000'],
+            'name'          => ['bail', 'required', 'max:100'],
+            'description'   => ['bail', 'required', 'max:60000'],
         ];
     }
 
