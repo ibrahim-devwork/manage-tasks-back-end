@@ -47,7 +47,7 @@ class TaskRequest extends BaseRequest
             'tasks-update'          => ['id' => 'exists:tasks,id'] + $this->storeOrUpdate(),
             
             'tasks-changeStatut'    => ['id'        => 'exists:tasks,id',
-                                        'statut'    => ['bail', 'required', 'numeric', 'min:0', 'max:4']],
+                                        'statut'    => ['bail', 'required', 'numeric', 'min:1', 'max:5']],
             default => [],
         };
     }
@@ -55,9 +55,9 @@ class TaskRequest extends BaseRequest
     public function storeOrUpdate()
     {
         return [
-            'description'   => ['bail', 'required', 'max:60000'],
+            'description'   => ['bail', 'required', 'max:300'],
             'deadline'      => ['bail', 'required', 'date', 'date_format:Y-m-d'],
-            'statut'        => ['bail', 'required', 'numeric', 'min:0', 'max:4'],
+            'statut'        => ['bail', 'required', 'numeric', 'min:1', 'max:5'],
             'id_project'    => ['bail', 'required', 'exists:projects,id'],
             'users'         => ['bail', 'required', 'array'],
             'users.*'       => ['bail' ,'required', 'exists:users,id'],
@@ -69,6 +69,7 @@ class TaskRequest extends BaseRequest
         return [
             'count_per_page'    => ['bail', 'nullable', 'numeric'],
             'id_project'        => ['bail', 'nullable', 'numeric'],
+            'statut'            => ['bail', 'nullable', 'numeric'],
             'search'            => ['bail', 'nullable', 'string'],
         ];
     }

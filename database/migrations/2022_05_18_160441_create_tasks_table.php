@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->text('description');
+            $table->string('description', 300);
             $table->date('deadline');
-            $table->tinyInteger('statut')->default(0);
+            $table->tinyInteger('statut')->default(1);
             $table->foreignId('id_project')->unsigned();
             $table->foreignId('id_user')->unsigned();
 
