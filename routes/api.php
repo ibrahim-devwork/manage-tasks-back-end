@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DropDownActionsnController;
 use App\Http\Controllers\DropDownProjectsController;
 use App\Http\Controllers\DropDownRolesController;
@@ -64,6 +65,9 @@ Route::group(['middleware'=> ['force_json_sanctum']], function () {
         Route::get('/select-users',     DropDownUsersController::class);
         Route::get('/select-projects',  DropDownProjectsController::class);
         Route::get('/select-actions',   DropDownActionsnController::class);
+
+        // Dashboard
+        Route::post('/dashboard-filter',    [DashboardController::class, 'getByFilter'])->name('dashboard-filter');
     });
 
     // Free routes --------------------------------------------

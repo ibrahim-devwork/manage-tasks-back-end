@@ -53,7 +53,7 @@ class TaskRepository implements InterfaceRepository {
         $task->save();
 
         if(isset($data['users']) && count($data['users']) > 0)
-            $task->tasks_users()->sync($data['users']);
+            $task->tasks_users()->attach($data['users']);
 
         return $task;
     }
@@ -76,7 +76,7 @@ class TaskRepository implements InterfaceRepository {
         $task->update();
 
         if(isset($data['users']) && count($data['users']) > 0)
-            $task->tasks_users()->attach($data['users']);
+            $task->tasks_users()->sync($data['users']);
 
         return $task;
     }

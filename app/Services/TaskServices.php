@@ -31,7 +31,7 @@ class TaskServices
             $count_per_page = $filter['count_per_page'];
         }
 
-        return $query->with('user')->orderBy('created_at', 'DESC')->paginate($count_per_page);
+        return $query->with('tasks_users')->orderBy('created_at', 'DESC')->paginate($count_per_page);
     }
 }
 ?>

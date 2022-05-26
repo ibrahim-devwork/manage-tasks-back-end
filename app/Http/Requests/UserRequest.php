@@ -55,7 +55,7 @@ class UserRequest extends BaseRequest
             'users-show', 'users-delete' => ['id' => 'exists:users,id'],
             'users-store'   => 
                             [
-                                'username'          => ['bail', 'required', 'unique:users,username', 'max:50'],
+                                'username'          => ['bail', 'required', 'unique:users,username', 'max:3', 'max:22'],
                                 'email'             => ['bail', 'required', 'email:rfc,dns', 'unique:users,email', 'max:50'],
                                 'password'          => ['bail', 'required', 'string', 'min:6', 'max:50'],
                                 'confirm_password'  => ['bail', 'required', 'same:password']
@@ -64,7 +64,7 @@ class UserRequest extends BaseRequest
             'users-update'  => 
                             [
                                 'id'                => 'exists:users,id',
-                                'username'          => ['bail', 'required', 'unique:users,username,'.$this->id, 'max:50'],
+                                'username'          => ['bail', 'required', 'unique:users,username,'.$this->id, 'max:3', 'max:22'],
                                 'email'             => ['bail', 'required', 'email:rfc,dns', 'unique:users,email,'.$this->id, 'max:50'],
                             ] + $this->storeOrUpdate(),
             default => [],
@@ -74,8 +74,8 @@ class UserRequest extends BaseRequest
     public function storeOrUpdate()
     {
         return [
-            'first_name'    => ['bail', 'nullable', 'max:50'],
-            'last_name'     => ['bail', 'nullable', 'max:50'],
+            'first_name'    => ['bail', 'nullable', 'max:25'],
+            'last_name'     => ['bail', 'nullable', 'max:25'],
             'phone_number'  => ['bail', 'nullable', 'max:15'],
             'image'         => ['bail', 'nullable', 'mimes:jpg,jpeg,png'],
             'id_role'       => ['bail', 'required', 'numeric', 'exists:roles,id', 'min:2'],
