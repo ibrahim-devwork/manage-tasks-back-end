@@ -8,6 +8,7 @@ use App\Http\Controllers\DropDownActionsnController;
 use App\Http\Controllers\DropDownProjectsController;
 use App\Http\Controllers\DropDownRolesController;
 use App\Http\Controllers\DropDownUsersController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
@@ -33,7 +34,7 @@ Route::group(['middleware'=> ['force_json_sanctum']], function () {
     Route::group(['middleware'=> ['auth:sanctum']], function () {
         
         // Logout
-        Route::post('/logout', [AuthController::class, 'logout']);
+        Route::post('/logout',              [AuthController::class, 'logout']);
 
         // Users
         Route::get('/users',                [UserController::class, 'index'])->name('users-index');
@@ -68,6 +69,12 @@ Route::group(['middleware'=> ['force_json_sanctum']], function () {
 
         // Dashboard
         Route::post('/dashboard-filter',    [DashboardController::class, 'getByFilter'])->name('dashboard-filter');
+
+        // Profile
+        Route::post('/change-infos',        [ProfileController::class, 'changeInfos'])->name('change-infos');
+        Route::post('/change-email',        [ProfileController::class, 'changeEmail'])->name('change-email');
+        Route::post('/change-username',     [ProfileController::class, 'changeUsername'])->name('change-username');
+        Route::post('/change-password',     [ProfileController::class, 'changePassword'])->name('change-password');
     });
 
     // Free routes --------------------------------------------
