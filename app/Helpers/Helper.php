@@ -37,9 +37,6 @@ class Helper
         if(isset($image) && $image->isValid()){
             $image      = $image;
             $imageName  = time() . Str::random(5) . '.' . $image->getClientOriginalExtension();
-            if(!file_exists('images/'. $folder_name .'/')){
-                mkdir('images/'. $folder_name .'/');
-            }
             $destinationPath = public_path('images/'. $folder_name .'/');
             $image->move($destinationPath, $imageName);
             return $imageName;

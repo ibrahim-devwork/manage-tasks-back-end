@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class ProfileRequest extends FormRequest
+class ProfileRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -48,7 +48,7 @@ class ProfileRequest extends FormRequest
                                 ],
 
             'change-username'    => [
-                                    'username'          => ['bail', 'required', 'unique:users,username,'.$this->id, 'max:3', 'max:22'],
+                                    'username'          => ['bail', 'required', 'unique:users,username,'.$this->id, 'min:3', 'max:22'],
                                     'password'          => ['bail', 'required', 'string', 'min:6', 'max:50']
                                 ],
 

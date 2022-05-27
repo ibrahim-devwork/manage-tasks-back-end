@@ -18,6 +18,16 @@ class ProfileController extends Controller
         $this->profileRepository = $profileRepository;
     }
 
+    public function getPRofile()
+    {
+        try{
+            return  new UserResource($this->profileRepository->getPRofile());
+        }catch(\Exception $errors){
+            Log::error("Error *getPRofile ProfileController*, IP: " . FacadesRequest::getClientIp(true) . ", {$errors->getMessage()}");
+            return response()->json(['errors' => $errors->getMessage()], 500);
+        }
+    }
+
     public function changeInfos(ProfileRequest $profileRequest)
     {
         try{

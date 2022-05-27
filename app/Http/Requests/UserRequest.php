@@ -55,7 +55,7 @@ class UserRequest extends BaseRequest
             'users-show', 'users-delete' => ['id' => 'exists:users,id'],
             'users-store'   => 
                             [
-                                'username'          => ['bail', 'required', 'unique:users,username', 'max:3', 'max:22'],
+                                'username'          => ['bail', 'required', 'unique:users,username', 'min:3', 'max:22'],
                                 'email'             => ['bail', 'required', 'email:rfc,dns', 'unique:users,email', 'max:50'],
                                 'password'          => ['bail', 'required', 'string', 'min:6', 'max:50'],
                                 'confirm_password'  => ['bail', 'required', 'same:password']
@@ -64,7 +64,7 @@ class UserRequest extends BaseRequest
             'users-update'  => 
                             [
                                 'id'                => 'exists:users,id',
-                                'username'          => ['bail', 'required', 'unique:users,username,'.$this->id, 'max:3', 'max:22'],
+                                'username'          => ['bail', 'required', 'unique:users,username,'.$this->id, 'min:3', 'max:22'],
                                 'email'             => ['bail', 'required', 'email:rfc,dns', 'unique:users,email,'.$this->id, 'max:50'],
                             ] + $this->storeOrUpdate(),
             default => [],

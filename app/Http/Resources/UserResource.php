@@ -21,8 +21,8 @@ class UserResource extends JsonResource
            'username'       => $this->username,
            'email'          => $this->email,
            'phone_number'   => $this->phone_number,
-           'image'          => $this->image,
-           'role'          => $this->role->role ?? null
+           'image'          => asset('images/users/' . $this->image),
+           'role'           => $this->role->role ?? null
        ];
     }
 }

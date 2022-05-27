@@ -71,6 +71,7 @@ Route::group(['middleware'=> ['force_json_sanctum']], function () {
         Route::post('/dashboard-filter',    [DashboardController::class, 'getByFilter'])->name('dashboard-filter');
 
         // Profile
+        Route::get('/profile',              [ProfileController::class, 'getPRofile']);
         Route::post('/change-infos',        [ProfileController::class, 'changeInfos'])->name('change-infos');
         Route::post('/change-email',        [ProfileController::class, 'changeEmail'])->name('change-email');
         Route::post('/change-username',     [ProfileController::class, 'changeUsername'])->name('change-username');

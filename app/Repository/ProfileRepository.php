@@ -16,12 +16,17 @@ class ProfileRepository {
         $this->user   = $user;
     }
 
-    public function changeInfos($data)
+    public function getProfile()
     {
-        $user                 = $this->user->wher('id', Auth::user()->id)->first();
-        $user->first_name     = $data['first_name'];
-        $user->last_name      = $data['last_name'];
-        $user->phone_number   = $data['phone_number'];
+        return  $this->user->where('id', Auth::user()->id)->first();
+    }
+
+    public function changeInfos($data)
+    {   
+        $user                 = $this->user->where('id', Auth::user()->id)->first();
+        $user->first_name     = $data['first_name'] ?? null;
+        $user->last_name      = $data['last_name'] ?? null;
+        $user->phone_number   = $data['phone_number'] ?? null;
        
         if(isset($data['image'])){
         $user->image          = Helper::saveFile($data['image'], 'users');
@@ -33,7 +38,7 @@ class ProfileRepository {
 
     public function changeEmail($data)
     {
-        $user                 = $this->user->wher('id', Auth::user()->id)->first();
+        $user                 = $this->user->where('id', Auth::user()->id)->first();
         
         if(!$user || !Hash::check($data['password'], $user->password))
             return false;
@@ -46,7 +51,7 @@ class ProfileRepository {
 
     public function changeUsername($data)
     {
-        $user                 = $this->user->wher('id', Auth::user()->id)->first();
+        $user                 = $this->user->where('id', Auth::user()->id)->first();
         
         if(!$user || !Hash::check($data['password'], $user->password))
             return false;
@@ -59,12 +64,12 @@ class ProfileRepository {
 
     public function changePassword($data)
     {
-        $user                   = $this->user->wher('id', Auth::user()->id)->first();
+        $user                   = $this->user->where('id', Auth::user()->id)->first();
         
         if(!$user || !Hash::check($data['current_password'], $user->password))
             return false;
         
-        $user->confirm_password = Hash::make($data['confirm_password']);
+        $user->password = Hash::make($data['confirm_password']);
         $user->update();
         
         return $user;
