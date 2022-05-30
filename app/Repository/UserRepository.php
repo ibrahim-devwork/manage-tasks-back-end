@@ -20,7 +20,7 @@ class UserRepository implements InterfaceRepository {
 
     public function getAll()
     {
-        return $this->user->where('id_role', 2)->paginate(Helper::count_per_page);
+        return $this->user->whereIn('id_role', [2, 3])->paginate(Helper::count_per_page);
     }
 
     public function getByFilter($filter)
@@ -30,55 +30,52 @@ class UserRepository implements InterfaceRepository {
 
     public function getById($id)
     {   
-        return $this->user->where('id', $id)->where('id_role', 2)->first();
+        return $this->user->where('id', $id)->whereIn('id_role', [2, 3])->first();
     }
 
     public function create($data)
     {
         $user                 = new $this->user;
-        $user->first_name     = $data['first_name'];
-        $user->last_name      = $data['last_name'];
+        $user->first_name     = $data['first_name'] ?? null;
+        $user->last_name      = $data['last_name'] ?? null;
         $user->username       = $data['username'];
         $user->email          = $data['email'];
-        $user->phone_number   = $data['phone_number'];
+        $user->phone_number   = $data['phone_number'] ?? null;
         $user->password       = Hash::make($data['confirm_password']);
         $user->id_role        = $data['id_role'];
-      
-        if(isset($data['image'])){
-        $user->image          = Helper::saveFile($data['image'], 'users');
-        }
+        $user->image          = "profile.jpg";
         $user->save();
 
         if(isset($data['actions']) && count($data['actions']) > 0)
-            $user->allowed_actions()->sync($data['actions']);
+            $user->allowed_actions()->attach($data['actions']);
         
         return $user;
     }
 
     public function update($id, $data)
     {
-        $user                 = $this->user->where('id', $id)->where('id_role', 2)->first();
-        $user->first_name     = $data['first_name'];
-        $user->last_name      = $data['last_name'];
+        $user                 = $this->user->where('id', $id)->whereIn('id_role', [2, 3])->first();
+        $user->first_name     = $data['first_name'] ?? null;
+        $user->last_name      = $data['last_name'] ?? null;
         $user->username       = $data['username'];
         $user->email          = $data['email'];
-        $user->phone_number   = $data['phone_number'];
+        $user->phone_number   = $data['phone_number'] ?? null;
         $user->id_role        = $data['id_role'];
-       
-        if(isset($data['image'])){
-        $user->image          = Helper::saveFile($data['image'], 'users');
-        }
+        
+        if(isset($data['confirm_password']) && $data['confirm_password'] != "")
+            $user->password       = Hash::make($data['confirm_password']);
+
         $user->update();
 
         if(isset($data['actions']) && count($data['actions']) > 0)
-            $user->allowed_actions()->attach($data['actions']);
+            $user->allowed_actions()->sync($data['actions']);
 
         return $user;
     }
 
     public function delete($id)
     {
-        $user = $this->user->where('id', $id)->where('id_role', 2)->first();
+        $user = $this->user->where('id', $id)->whereIn('id_role', [2, 3])->first();
         $user->delete();
 
         return $user;

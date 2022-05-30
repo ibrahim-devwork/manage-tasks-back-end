@@ -33,13 +33,13 @@ class UserRequest extends BaseRequest
         ]);
 
         // Decode JSON Actions array
-        if($this->actions && is_string($this->actions)){
-            $actions[] = json_decode($this->actions, true);
-            if($actions)
-            $this->merge([
-                'actions' => $actions,
-            ]);
-        }
+        // if($this->actions && is_string($this->actions)){
+        //     $actions[] = json_decode($this->actions, true);
+        //     if($actions)
+        //     $this->merge([
+        //         'actions' => $actions,
+        //     ]);
+        // }
     }
 
     /**
@@ -66,6 +66,8 @@ class UserRequest extends BaseRequest
                                 'id'                => 'exists:users,id',
                                 'username'          => ['bail', 'required', 'unique:users,username,'.$this->id, 'min:3', 'max:22'],
                                 'email'             => ['bail', 'required', 'email:rfc,dns', 'unique:users,email,'.$this->id, 'max:50'],
+                                'password'          => ['bail', 'nullable', 'string', 'min:6', 'max:50'],
+                                'confirm_password'  => ['bail', 'nullable', 'same:password']
                             ] + $this->storeOrUpdate(),
             default => [],
         };
@@ -77,7 +79,6 @@ class UserRequest extends BaseRequest
             'first_name'    => ['bail', 'nullable', 'max:25'],
             'last_name'     => ['bail', 'nullable', 'max:25'],
             'phone_number'  => ['bail', 'nullable', 'max:15'],
-            'image'         => ['bail', 'nullable', 'mimes:jpg,jpeg,png'],
             'id_role'       => ['bail', 'required', 'numeric', 'exists:roles,id', 'min:2'],
             'actions'       => ['bail', 'nullable', 'array'],
             'actions.*'     => ['bail' ,'nullable', 'exists:actions,id'],
