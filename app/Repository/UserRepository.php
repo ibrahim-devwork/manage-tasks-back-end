@@ -20,7 +20,7 @@ class UserRepository implements InterfaceRepository {
 
     public function getAll()
     {
-        return $this->user->whereIn('id_role', [2, 3])->paginate(Helper::count_per_page);
+        return $this->user->whereIn('id_role', [2, 3])->with('allowed_actions')->paginate(Helper::count_per_page);
     }
 
     public function getByFilter($filter)

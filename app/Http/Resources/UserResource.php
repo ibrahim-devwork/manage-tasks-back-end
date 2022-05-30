@@ -22,7 +22,9 @@ class UserResource extends JsonResource
            'email'          => $this->email,
            'phone_number'   => $this->phone_number,
            'image'          => asset('images/users/' . $this->image),
-           'role'           => $this->role->role ?? null
+           'role'           => $this->role->role ?? null,
+           'id_role'        => $this->id_role,
+           'actions'        => ActionResource::collection($this->whenLoaded('allowed_actions')),
        ];
     }
 }
