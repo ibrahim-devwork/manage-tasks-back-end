@@ -17,7 +17,7 @@ class UserServices
             $count_per_page = $filter['count_per_page'];
         }
 
-        return $query->whereIn('id_role', [2, 3])->orderBy('created_at', 'DESC')->paginate($count_per_page);
+        return $query->whereIn('id_role', [2, 3])->with('allowed_actions')->orderBy('created_at', 'DESC')->paginate($count_per_page);
     }
 }
 ?>

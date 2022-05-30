@@ -67,7 +67,7 @@ class UserRepository implements InterfaceRepository {
 
         $user->update();
 
-        if(isset($data['actions']) && count($data['actions']) > 0)
+        if(isset($data['actions']))
             $user->allowed_actions()->sync($data['actions']);
 
         return $user;
