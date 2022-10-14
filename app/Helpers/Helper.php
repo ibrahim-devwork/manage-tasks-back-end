@@ -27,11 +27,11 @@ class Helper
         return $user->role->role == Helper::ADMIN_ROLE;
     }
 
-    // public static function isUser()
-    // {
-    //     $user = Auth::user();
-    //     return $user->role->role == Helper::USER_ROLE;
-    // }
+    public static function isUser()
+    {
+       $user = Auth::user();
+        return $user->role->role == Helper::USER_ROLE;
+    }
 
      public static function saveFile($image, $folder_name = '') {
         if(isset($image) && is_file($image)) {
