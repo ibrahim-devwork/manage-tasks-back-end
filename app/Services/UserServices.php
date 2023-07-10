@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\PaginationEnum;
 use App\Helpers\Helper;
 
 class UserServices
@@ -12,7 +13,7 @@ class UserServices
             $query = $query->search($filter['search']);
         }
 
-        $count_per_page = Helper::count_per_page;
+        $count_per_page = PaginationEnum::Count_per_page;
         if(isset($filter['count_per_page']) && $filter['count_per_page'] > 0 ){
             $count_per_page = $filter['count_per_page'];
         }
