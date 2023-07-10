@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\Users;
 
 use App\Models\User;
 use App\Helpers\Helper;
+use App\Repository\Users\InterfaceUserRepository;
 use App\Services\UserServices;
 use Illuminate\Support\Facades\Hash;
 
-class UserRepository implements InterfaceRepository {
+class DbUserRepository implements InterfaceUserRepository {
 
     protected $user;
     protected $userServices;
@@ -16,11 +17,6 @@ class UserRepository implements InterfaceRepository {
     {
         $this->user = $user;
         $this->userServices = $userServices;
-    }
-
-    public function getAll()
-    {
-        return $this->user->whereIn('id_role', [2, 3])->with('allowed_actions')->paginate(Helper::count_per_page);
     }
 
     public function getByFilter($filter)

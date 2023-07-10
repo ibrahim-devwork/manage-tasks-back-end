@@ -50,8 +50,7 @@ class UserRequest extends BaseRequest
     public function rules()
     {
         return match (Route::currentRouteName()) {
-            'users-index'   => [],
-            'users-filter'  => $this->getByFilter(),
+            'users-index'  => $this->getByFilter(),
             'users-show', 'users-delete' => ['id' => 'exists:users,id'],
             'users-store'   => 
                             [

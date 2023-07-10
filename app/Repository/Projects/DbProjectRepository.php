@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\Projects;
 
 use App\Helpers\Helper;
 use App\Models\Project;
 use App\Services\ProjectServices;
 use Illuminate\Support\Facades\Auth;
 
-class ProjectRepository implements InterfaceRepository {
+class DbProjectRepository implements InterfaceProjectRepository {
 
     protected $project;
     protected $projectServices;
@@ -16,17 +16,6 @@ class ProjectRepository implements InterfaceRepository {
     {
         $this->project         = $project;
         $this->projectServices = $projectServices;
-    }
-
-    public function getAll()
-    {
-        $user = Auth::user();
-        if(Helper::isSuperAdmin()){
-            return $this->project->orderBy('created_at', 'DESC')->paginate(Helper::count_per_page);
-        }elseif(Helper::isAdmin()){
-            return $this->project->where('id_user', $user->id)->orderBy('created_at', 'DESC')->paginate(Helper::count_per_page);
-        }
-        
     }
 
     public function getByFilter($filter)

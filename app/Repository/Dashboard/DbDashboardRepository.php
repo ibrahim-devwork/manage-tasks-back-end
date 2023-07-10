@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\Dashboard;
 
-use App\Helpers\Helper;
 use App\Models\Task;
 use App\Services\DashboardServices;
-use Illuminate\Support\Facades\Auth;
 
-class DashboardRepository {
+class DbDashboardRepository implements InterfaceDashboardRepository{
 
     protected $task;
     protected $dashboardServices;

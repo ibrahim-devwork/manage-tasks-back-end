@@ -6,33 +6,23 @@ use App\Http\Requests\TaskRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Resources\TaskResurce;
-use App\Repository\TaskRepository;
+use App\Repository\Tasks\InterfaceTaskRepository;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 
 class TaskController extends Controller
 {
-    protected $taskRepository;
+    protected $interfaceTaskRepository;
 
-    public function __construct(TaskRepository $taskRepository)
+    public function __construct(InterfaceTaskRepository $interfaceTaskRepository)
     {
-        $this->taskRepository = $taskRepository;
+        $this->interfaceTaskRepository = $interfaceTaskRepository;
     }
 
     public function index(TaskRequest $taskRequest)
     {
         try{
-            return TaskResurce::collection($this->taskRepository->getAll());
-        }catch(\Exception $errors){
-            Log::error("Error *index TaskController*, IP: " . FacadesRequest::getClientIp(true) . ", {$errors->getMessage()}");
-            return response()->json(['errors' => $errors->getMessage()], 500);
-        }
-    }
-
-    public function getByFilter(TaskRequest $taskRequest)
-    {
-        try{
             $filter = $taskRequest->validated();
-            return TaskResurce::collection($this->taskRepository->getByFilter($filter));
+            return TaskResurce::collection($this->interfaceTaskRepository->getByFilter($filter));
         }catch(\Exception $errors){
             Log::error("Error *getByFilter TaskController*, IP: " . FacadesRequest::getClientIp(true) . ", {$errors->getMessage()}");
             return response()->json(['errors' => $errors->getMessage()], 500);
@@ -42,7 +32,7 @@ class TaskController extends Controller
     public function show($id, TaskRequest $taskRequest)
     { 
         try{
-            return new TaskResurce($this->taskRepository->getById($id));
+            return new TaskResurce($this->interfaceTaskRepository->getById($id));
         }catch(\Exception $errors){
             Log::error("Error *show TaskController*, IP: " . FacadesRequest::getClientIp(true) . ", {$errors->getMessage()}");
             return response()->json(['errors' => $errors->getMessage()], 500);
@@ -53,7 +43,7 @@ class TaskController extends Controller
     {
         try{
             $data = $taskRequest->validated();
-            return new TaskResurce($this->taskRepository->create($data));
+            return new TaskResurce($this->interfaceTaskRepository->create($data));
         }catch(\Exception $errors){
             Log::error("Error *store TaskController*, IP: " . FacadesRequest::getClientIp(true) . ", {$errors->getMessage()}");
             return response()->json(['errors' => $errors->getMessage()], 500);
@@ -64,7 +54,7 @@ class TaskController extends Controller
     {   
         try{
             $data = $taskRequest->validated();
-            $result = $this->taskRepository->update($id, $data);
+            $result = $this->interfaceTaskRepository->update($id, $data);
            
             if($result === 403)
               return  response()->json(['message' => 'Unauthorized action.'], 403);
@@ -81,7 +71,7 @@ class TaskController extends Controller
     {   
         try{
             $data = $taskRequest->validated();
-            $result = $this->taskRepository->changeStatut($id, $data);
+            $result = $this->interfaceTaskRepository->changeStatut($id, $data);
            
             if($result === 403)
               return  response()->json(['message' => 'Unauthorized action.'], 403);
@@ -97,7 +87,7 @@ class TaskController extends Controller
     public function delete($id, TaskRequest $taskRequest)
     {
         try{
-            $result = $this->taskRepository->delete($id);
+            $result = $this->interfaceTaskRepository->delete($id);
             
             if($result === 403)
               return  response()->json(['message' => 'Unauthorized action.'], 403);

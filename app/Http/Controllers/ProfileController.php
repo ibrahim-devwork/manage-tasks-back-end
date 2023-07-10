@@ -6,22 +6,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Resources\UserResource;
-use App\Repository\ProfileRepository;
+use App\Repository\Profile\InterfaceProfileRpository;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 
 class ProfileController extends Controller
 {
-    protected $profileRepository;
+    protected $interfaceProfileRpository;
 
-    public function __construct(ProfileRepository $profileRepository)
+    public function __construct(InterfaceProfileRpository $interfaceProfileRpository)
     {
-        $this->profileRepository = $profileRepository;
+        $this->interfaceProfileRpository = $interfaceProfileRpository;
     }
 
     public function getPRofile()
     {
         try{
-            return  new UserResource($this->profileRepository->getPRofile());
+            return  new UserResource($this->interfaceProfileRpository->getPRofile());
         }catch(\Exception $errors){
             Log::error("Error *getPRofile ProfileController*, IP: " . FacadesRequest::getClientIp(true) . ", {$errors->getMessage()}");
             return response()->json(['errors' => $errors->getMessage()], 500);
@@ -32,7 +32,7 @@ class ProfileController extends Controller
     {
         try{
             $data = $profileRequest->validated();
-            return  new UserResource($this->profileRepository->changeInfos($data));
+            return  new UserResource($this->interfaceProfileRpository->changeInfos($data));
         }catch(\Exception $errors){
             Log::error("Error *changeInfos ProfileController*, IP: " . FacadesRequest::getClientIp(true) . ", {$errors->getMessage()}");
             return response()->json(['errors' => $errors->getMessage()], 500);
@@ -43,7 +43,7 @@ class ProfileController extends Controller
     {
         try{
             $data   = $profileRequest->validated();
-            $result = $this->profileRepository->changeEmail($data);
+            $result = $this->interfaceProfileRpository->changeEmail($data);
             if($result)
                 return  new UserResource($result);
             
@@ -58,7 +58,7 @@ class ProfileController extends Controller
     {
         try{
             $data   = $profileRequest->validated();
-            $result = $this->profileRepository->changeUsername($data);
+            $result = $this->interfaceProfileRpository->changeUsername($data);
             if($result)
                 return  new UserResource($result);
             
@@ -73,7 +73,7 @@ class ProfileController extends Controller
     {
         try{
             $data   = $profileRequest->validated();
-            $result = $this->profileRepository->changePassword($data);
+            $result = $this->interfaceProfileRpository->changePassword($data);
             if($result)
                 return  new UserResource($result);
             

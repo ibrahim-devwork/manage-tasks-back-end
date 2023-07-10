@@ -41,8 +41,7 @@ class ProjectRequest extends BaseRequest
     public function rules()
     {
         return match (Route::currentRouteName()) {
-            'projects-index'   => [],
-            'projects-filter'  => $this->getByFilter(),
+            'projects-index'  => $this->getByFilter(),
             'projects-show', 'projects-delete' => ['id' => 'exists:projects,id'],
             'projects-store'   => $this->storeOrUpdate(),
             'projects-update'  => ['id' => 'exists:projects,id'] + $this->storeOrUpdate(),

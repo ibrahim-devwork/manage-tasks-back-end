@@ -5,34 +5,24 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProjectRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use App\Repository\ProjectRepository;
 use App\Http\Resources\ProjectResource;
+use App\Repository\Projects\InterfaceProjectRepository;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 
 class ProjectController extends Controller
 {
-    protected $projectRepository;
+    protected $interfaceProjectRepository;
 
-    public function __construct(ProjectRepository $projectRepository)
+    public function __construct(InterfaceProjectRepository $interfaceProjectRepository)
     {
-        $this->projectRepository = $projectRepository;
+        $this->interfaceProjectRepository = $interfaceProjectRepository;
     }
 
     public function index(ProjectRequest $projectRequest)
     {
         try{
-            return ProjectResource::collection($this->projectRepository->getAll());
-        }catch(\Exception $errors){
-            Log::error("Error *index ProjectController*, IP: " . FacadesRequest::getClientIp(true) . ", {$errors->getMessage()}");
-            return response()->json(['errors' => $errors->getMessage()], 500);
-        }
-    }
-
-    public function getByFilter(ProjectRequest $projectRequest)
-    {
-        try{
             $filter = $projectRequest->validated();
-            return ProjectResource::collection($this->projectRepository->getByFilter($filter));
+            return ProjectResource::collection($this->interfaceProjectRepository->getByFilter($filter));
         }catch(\Exception $errors){
             Log::error("Error *getByFilter ProjectController*, IP: " . FacadesRequest::getClientIp(true) . ", {$errors->getMessage()}");
             return response()->json(['errors' => $errors->getMessage()], 500);
@@ -42,7 +32,7 @@ class ProjectController extends Controller
     public function show($id, ProjectRequest $projectRequest)
     {
         try{
-            return new ProjectResource($this->projectRepository->getById($id));
+            return new ProjectResource($this->interfaceProjectRepository->getById($id));
         }catch(\Exception $errors){
             Log::error("Error *show ProjectController*, IP: " . FacadesRequest::getClientIp(true) . ", {$errors->getMessage()}");
             return response()->json(['errors' => $errors->getMessage()], 500);
@@ -53,7 +43,7 @@ class ProjectController extends Controller
     {
         try{
             $data = $projectRequest->validated();
-            return new ProjectResource($this->projectRepository->create($data));
+            return new ProjectResource($this->interfaceProjectRepository->create($data));
         }catch(\Exception $errors){
             Log::error("Error *store ProjectController*, IP: " . FacadesRequest::getClientIp(true) . ", {$errors->getMessage()}");
             return response()->json(['errors' => $errors->getMessage()], 500);
@@ -64,7 +54,7 @@ class ProjectController extends Controller
     {   
         try{
             $data = $projectRequest->validated();
-            $result = $this->projectRepository->update($id, $data);
+            $result = $this->interfaceProjectRepository->update($id, $data);
            
             if($result === 403)
               return  response()->json(['message' => 'Unauthorized action.'], 403);
@@ -80,7 +70,7 @@ class ProjectController extends Controller
     public function delete($id, ProjectRequest $projectRequest)
     {
         try{
-            $result = $this->projectRepository->delete($id);
+            $result = $this->interfaceProjectRepository->delete($id);
             
             if($result === 403)
               return  response()->json(['message' => 'Unauthorized action.'], 403);

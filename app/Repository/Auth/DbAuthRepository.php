@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\Auth;
 
-use App\Helpers\Helper;
-use App\Repository\RepositoryInterface;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class AuthRepository
+class DbAuthRepository implements InterfaceAuthRepository
 {
     protected $user;
 

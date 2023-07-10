@@ -40,8 +40,7 @@ class TaskRequest extends BaseRequest
     public function rules()
     {
         return match (Route::currentRouteName()) {
-            'tasks-index'           => [],
-            'tasks-filter'          => $this->getByFilter(),
+            'tasks-index'           => $this->getByFilter(),
             'tasks-show', 'projects-delete' => ['id' => 'exists:tasks,id'],
             'tasks-store'           => $this->storeOrUpdate(),
             'tasks-update'          => ['id' => 'exists:tasks,id'] + $this->storeOrUpdate(),

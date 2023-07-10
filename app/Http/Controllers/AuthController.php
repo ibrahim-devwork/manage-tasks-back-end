@@ -2,28 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Authentications\RegisterRequest;
 use App\Http\Requests\AuthRequest;
-use App\Http\Requests\LoginRequest;
-use App\Repository\AuthRepository;
+use App\Repository\Auth\InterfaceAuthRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request as requestFacades;
 
 class AuthController extends Controller
 {
-    protected $authRepository;
+    protected $interfaceAuthRepository;
 
-    public function __construct(AuthRepository $authRepository)
+    public function __construct(InterfaceAuthRepository $interfaceAuthRepository)
     {
-        $this->authRepository = $authRepository;
+        $this->interfaceAuthRepository = $interfaceAuthRepository;
     }
 
     public function login(AuthRequest $authRequest)
     {
         try{
             $data   = $authRequest->validated();
-            $result = $this->authRepository->login($data);
+            $result = $this->interfaceAuthRepository->login($data);
             if($result){
                 return Response()->json(['data' => $result], 200);
             }else{

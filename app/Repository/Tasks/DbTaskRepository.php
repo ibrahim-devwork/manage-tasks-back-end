@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\Tasks;
 
 use Carbon\Carbon;
 use App\Models\Task;
 use App\Helpers\Helper;
+use App\Repository\AllFnCrudInterfaces\CrudInterface;
+use App\Repository\Tasks\InterfaceTaskRepository;
 use App\Services\TaskServices;
 use Illuminate\Support\Facades\Auth;
 
-class TaskRepository implements InterfaceRepository {
+class DbTaskRepository implements InterfaceTaskRepository {
 
     protected $task;
     protected $taskServices;
@@ -17,17 +19,6 @@ class TaskRepository implements InterfaceRepository {
     {
         $this->task         = $task;
         $this->taskServices = $taskServices;
-    }
-
-    public function getAll()
-    {
-        $user = Auth::user();
-        if(Helper::isSuperAdmin()){
-            return $this->task->with('user')->paginate(Helper::count_per_page);
-        }elseif(Helper::isAdmin()){
-            return $this->task->where('id_user', $user->id)->with('user')->paginate(Helper::count_per_page);
-        }
-        
     }
 
     public function getByFilter($filter)
