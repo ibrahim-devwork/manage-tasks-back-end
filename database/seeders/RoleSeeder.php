@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\RolesEnum;
 use App\Models\Role;
 use App\Helpers\Helper;
 use Illuminate\Database\Seeder;
@@ -22,9 +23,9 @@ class RoleSeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         $roles = [
-            Helper::SUPER_ADMIN_ROLE,
-            Helper::ADMIN_ROLE, 
-            Helper::USER_ROLE, 
+            RolesEnum::Super_admin,
+            RolesEnum::Admin,
+            RolesEnum::User,
         ];
 
         foreach($roles as $key => $role)
