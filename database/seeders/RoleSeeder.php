@@ -23,9 +23,9 @@ class RoleSeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         $roles = [
-            RolesEnum::Super_admin,
-            RolesEnum::Admin,
-            RolesEnum::User,
+            RolesEnum::Super_admin->value,
+            RolesEnum::Admin->value,
+            RolesEnum::User->value,
         ];
 
         foreach($roles as $key => $role)

@@ -15,19 +15,19 @@ class Helper
     public static function isSuperAdmin()
     {
         $user = Auth::user();
-        return $user->role->role == RolesEnum::Super_admin;
+        return $user->role->role == RolesEnum::Super_admin->value;
     }
 
     public static function isAdmin()
     {
         $user = Auth::user();
-        return $user->role->role == RolesEnum::Admin;
+        return $user->role->role == RolesEnum::Admin->value;
     }
 
     public static function isUser()
     {
        $user = Auth::user();
-        return $user->role->role == RolesEnum::User;
+        return $user->role->role == RolesEnum::User->value;
     }
 
      public static function saveFile($image, $folder_name = '') {
